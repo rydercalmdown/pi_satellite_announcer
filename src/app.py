@@ -83,7 +83,7 @@ def announce_satellite(sat):
     sentence = '{name} is overhead, {distance} kilometers from you at an altitude of {altitude} kilometers'.format(
         **locals()
     )
-    cmd = 'say "{}"'.format(sentence)
+    cmd = 'espeak -a 200 "{}" --stdout | aplay'.format(sentence)
     os.system(cmd)
 
 

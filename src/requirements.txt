@@ -1,0 +1,3 @@
+pyephem
+requests
+pyttsx3==2.90

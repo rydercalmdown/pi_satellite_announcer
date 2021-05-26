@@ -9,3 +9,11 @@ export RADIUS=20
 # Your spacetrack credentials
 export SPACETRACK_USERNAME=youremail@example.com
 export SPACETRACK_PASSWORD=your_spacetrack_password
+
+# Twilio credentials
+export TWILIO_ACCOUNT_SID=replace
+export TWILIO_AUTH_TOKEN=replace
+
+# Twilio settings
+export TWILIO_NUMBER_FROM=+10000000000
+export TWILIO_NUMBER_TO=10000000000

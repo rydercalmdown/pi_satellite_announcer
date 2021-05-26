@@ -3,10 +3,16 @@ import time
 from satellite import Satellite
 from spacetrack import SpaceTrackApi
 import storage
+from twilio.rest import Client
+
 
 
 satellites = []
 last_updated = []
+use_twilio = True
+
+if use_twilio:
+    client = Client(os.environ['TWILIO_ACCOUNT_SID'], os.environ['TWILIO_AUTH_TOKEN'])
 
 
 def get_overhead_satellites_dicts(lat, lng, radius):
@@ -73,6 +79,15 @@ def cron_refresh_spacetrack_cache():
     storage.save_metadata(metadata)
 
 
+def send_sms(message):
+    """Send a sms notification about the satellite"""
+    client.messages.create(
+        body=message,
+        from_=os.environ['TWILIO_NUMBER_FROM'],
+        to=['TWILIO_NUMBER_TO']
+    )
+
+
 def announce_satellite(sat):
     """Announces the satellite"""
     if sat['isDebris']:
@@ -85,6 +100,8 @@ def announce_satellite(sat):
     )
     cmd = 'espeak -a 200 "{}" --stdout | aplay'.format(sentence)
     os.system(cmd)
+    if use_twilio:
+        send_sms(message)
 
 
 def main():
